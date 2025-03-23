@@ -1,0 +1,24 @@
+[2025-03-23 13:19:33] INFO: Program started.
+[2025-03-23 13:19:33] DEBUG: Debugging information.
+[2025-03-23 13:19:33] ERROR: An error occurred.
+[2025-03-23 13:23:47] INFO: Program started.
+[2025-03-23 13:23:47] DEBUG: Debugging information.
+[2025-03-23 13:23:47] ERROR: An error occurred.
+[2025-03-23 13:43:56] INFO: Opened database successfully!
+[2025-03-23 13:43:56] ERROR: Error inserting into table 'users': file is not a database
+[2025-03-23 13:43:56] ERROR: Error querying table 'users': file is not a database
+[2025-03-23 13:48:54] INFO: Opened database successfully!
+[2025-03-23 13:48:54] ERROR: Error inserting into table 'users': no such table: users
+[2025-03-23 13:48:54] ERROR: Error querying table 'users': no such table: users
+[2025-03-23 13:49:47] INFO: Opened database successfully!
+[2025-03-23 13:49:47] ERROR: Error inserting into table 'users': table users has 3 columns but 2 values were supplied
+[2025-03-23 13:49:47] INFO: Queried table 'users' successfully.
+[2025-03-23 13:50:11] INFO: Opened database successfully!
+[2025-03-23 13:50:11] INFO: Queried table 'users' successfully.
+[2025-03-23 13:50:34] INFO: Opened database successfully!
+[2025-03-23 13:50:34] INFO: Inserted values into table 'users' successfully.
+[2025-03-23 13:50:34] INFO: id: 1 | username: admin | password: password123 | 
+[2025-03-23 13:50:34] INFO: Queried table 'users' successfully.
+[2025-03-23 13:50:46] INFO: Opened database successfully!
+[2025-03-23 13:50:46] INFO: id: 1 | username: admin | password: password123 | 
+[2025-03-23 13:50:46] INFO: Queried table 'users' successfully.

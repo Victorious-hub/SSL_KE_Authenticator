@@ -1,0 +1,5 @@
+CERTS_DIR = "certs"
+COUNTRY_NAME = "US"
+STATE_OR_PROVINCE_NAME = "California"
+LOCALITY_NAME = "San Francisco"
+ORGANIZATION_NAME = "My Organization"
