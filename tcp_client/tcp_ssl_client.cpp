@@ -30,6 +30,7 @@ bool CTCPSSLClient::SetSndTimeout(struct timeval timeout){
 // Connect to server
 bool CTCPSSLClient::Connect(const std::string& strServer, const std::string& strPort)
 {
+   std::cout<< "111" << std::endl;
    if (m_TCPClient.Connect(strServer, strPort))
    {
       m_SSLConnectSocket.m_SockFd = m_TCPClient.m_ConnectSocket;

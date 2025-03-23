@@ -1,3 +1,9 @@
 [2025-03-23 16:39:49] INFO: Opened database successfully!
 [2025-03-23 16:39:49] INFO: id: 1 | username: admin | password: password123 | 
 [2025-03-23 16:39:49] INFO: Queried table 'users' successfully.
+[2025-03-23 19:45:19] INFO: Opened database successfully!
+[2025-03-23 19:45:19] INFO: id: 1 | username: admin | password: password123 | 
+[2025-03-23 19:45:19] INFO: Queried table 'users' successfully.
+[2025-03-23 20:35:07] INFO: Opened database successfully!
+[2025-03-23 20:36:39] INFO: Opened database successfully!
+[2025-03-23 20:36:56] INFO: Checked if user exists successfully.

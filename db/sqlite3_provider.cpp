@@ -4,7 +4,7 @@
 #include <sqlite3.h>
 
 #include "sqlite3_provider.h"
-#include "logger.h"
+#include "../utils/logger.h"
 
 SQLite3Provider::SQLite3Provider(const char *dbFile, const std::string& logFilename) : dbFile(dbFile), logger(logFilename) {
     int exit = sqlite3_open(dbFile, &db);
@@ -79,9 +79,32 @@ void SQLite3Provider::queryTable(const std::string& tableName) {
     }
 }
 
-int main() {
-    SQLite3Provider db("database", "logfile.txt");
-    // db.insert("users", "'1', 'admin', 'password123'");
-    db.queryTable("users");
-    return 0;
+bool SQLite3Provider::isUserExists(const std::string& username, const std::string& password) {
+    std::string sql = "SELECT COUNT(*) FROM users WHERE username = '" + username + "' AND password = '" + password + "';";
+    char* errMsg = nullptr;
+    int userCount = 0;
+
+    auto callback = [](void* data, int argc, char** argv, char** colNames) -> int {
+        int* userCount = static_cast<int*>(data);
+        *userCount = std::stoi(argv[0]);
+        return 0;
+    };
+
+    int exit = sqlite3_exec(db, sql.c_str(), callback, &userCount, &errMsg);
+    if (exit != SQLITE_OK) {
+        // logger.log(ERROR, "Error checking if user exists: " + errMsg);
+        // logger.log(ERROR, "Error checking if user exists: " "': " + errMsg);
+        sqlite3_free(errMsg);
+    } else {
+        logger.log(INFO, "Checked if user exists successfully.");
+    }
+
+    return userCount > 0;
 }
+
+// int main() {
+//     SQLite3Provider db("database", "logfile.txt");
+//     // db.insert("users", "'1', 'admin', 'password123'");
+//     db.queryTable("users");
+//     return 0;
+// }
