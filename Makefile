@@ -4,7 +4,7 @@ LIBS = -lssl -lcrypto
 
 DB_LIBS = -lsqlite3
 
-SERVER_SOURCES = server.cpp ./utils/logger.cpp ./tcp_server/tcp_server.cpp ./tcp_server/tcp_ssl_server.cpp ./socket/secure_socket.cpp ./socket/socket.cpp
+SERVER_SOURCES = server.cpp ./tcp_client/tcp_ssl_client.cpp ./tcp_client/tcp_client.cpp ./utils/logger.cpp ./tcp_server/tcp_server.cpp ./tcp_server/tcp_ssl_server.cpp ./socket/secure_socket.cpp ./socket/socket.cpp
 SERVER_TARGET = server
 
 CLIENT_SOURCES = client.cpp ./utils/logger.cpp ./tcp_client/tcp_ssl_client.cpp ./tcp_client/tcp_client.cpp ./socket/secure_socket.cpp ./socket/socket.cpp
@@ -29,4 +29,4 @@ $(AUTH_TARGET): $(AUTH_SOURCES)
 	$(CXX) $(CXXFLAGS) $(AUTH_SOURCES) -o $(AUTH_TARGET) $(LIBS) $(DB_LIBS)
 
 clean:
-	rm -f $(SERVER_TARGET) $(CLIENT_TARGET) *.o
+	rm -f $(SERVER_TARGET) $(CLIENT_TARGET) $(AUTH_TARGET) $(PROXY_TARGET) *.o

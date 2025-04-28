@@ -7,3 +7,323 @@
 [2025-03-23 20:35:07] INFO: Opened database successfully!
 [2025-03-23 20:36:39] INFO: Opened database successfully!
 [2025-03-23 20:36:56] INFO: Checked if user exists successfully.
+[2025-04-28 00:48:47] INFO: Opened database successfully!
+[2025-04-28 00:49:16] INFO: Checked if user exists successfully.
+[2025-04-28 00:53:35] INFO: Opened database successfully!
+[2025-04-28 00:53:53] INFO: Checked if user exists successfully.
+[2025-04-28 00:54:53] INFO: Opened database successfully!
+[2025-04-28 00:54:59] INFO: Checked if user exists successfully.
+[2025-04-28 12:18:04] INFO: Opened database successfully!
+[2025-04-28 12:19:23] INFO: Checked if user exists successfully.
+[2025-04-28 12:28:07] INFO: Opened database successfully!
+[2025-04-28 12:28:30] INFO: Checked if user exists successfully.
+[2025-04-28 12:28:30] ERROR: Error inserting into table 'tokens': no such table: tokens
+[2025-04-28 12:29:08] INFO: Opened database successfully!
+[2025-04-28 12:29:18] INFO: Checked if user exists successfully.
+[2025-04-28 12:29:18] ERROR: Error inserting into table 'tokens': table tokens has 3 columns but 2 values were supplied
+[2025-04-28 12:42:01] INFO: Opened database successfully!
+[2025-04-28 12:42:13] INFO: Checked if user exists successfully.
+[2025-04-28 12:42:13] ERROR: Error inserting into table 'tokens': table tokens has 3 columns but 2 values were supplied
+[2025-04-28 12:42:36] INFO: Opened database successfully!
+[2025-04-28 12:42:53] INFO: Checked if user exists successfully.
+[2025-04-28 12:42:53] ERROR: Error executing insert query: datatype mismatch
+[2025-04-28 12:44:27] INFO: Opened database successfully!
+[2025-04-28 12:44:34] INFO: Checked if user exists successfully.
+[2025-04-28 12:44:34] INFO: Insert query executed successfully.
+[2025-04-28 12:45:53] INFO: Opened database successfully!
+[2025-04-28 12:51:32] INFO: Opened database successfully!
+[2025-04-28 12:51:51] INFO: Opened database successfully!
+[2025-04-28 12:52:01] INFO: Checked if user exists successfully.
+[2025-04-28 12:52:01] INFO: Insert query executed successfully.
+[2025-04-28 12:52:54] INFO: Opened database successfully!
+[2025-04-28 12:53:09] INFO: Opened database successfully!
+[2025-04-28 12:53:46] INFO: Opened database successfully!
+[2025-04-28 12:53:57] INFO: Checked if user exists successfully.
+[2025-04-28 12:53:57] ERROR: Error executing insert query: UNIQUE constraint failed: tokens.token
+[2025-04-28 19:32:46] INFO: Opened database successfully!
+[2025-04-28 19:36:33] INFO: Opened database successfully!
+[2025-04-28 19:36:40] INFO: Checked if user exists successfully.
+[2025-04-28 19:36:40] ERROR: Error executing insert query: UNIQUE constraint failed: tokens.token
+[2025-04-28 19:43:03] INFO: Opened database successfully!
+[2025-04-28 19:44:25] INFO: Opened database successfully!
+[2025-04-28 19:48:42] INFO: Opened database successfully!
+[2025-04-28 19:48:56] INFO: Checked if user exists successfully.
+[2025-04-28 19:48:56] ERROR: Error executing insert query: UNIQUE constraint failed: tokens.username
+[2025-04-28 19:56:11] INFO: Opened database successfully!
+[2025-04-28 19:57:17] INFO: Checked if user exists successfully.
+[2025-04-28 20:01:31] INFO: Opened database successfully!
+[2025-04-28 20:01:40] INFO: Checked if user exists successfully.
+[2025-04-28 20:05:06] INFO: Opened database successfully!
+[2025-04-28 20:05:15] INFO: Checked if user exists successfully.
+[2025-04-28 20:07:19] INFO: Opened database successfully!
+[2025-04-28 20:07:30] INFO: Checked if user exists successfully.
+[2025-04-28 20:11:02] INFO: Opened database successfully!
+[2025-04-28 20:11:08] INFO: Checked if user exists successfully.
+[2025-04-28 20:13:06] INFO: Opened database successfully!
+[2025-04-28 20:13:16] INFO: Checked if user exists successfully.
+[2025-04-28 20:13:16] INFO: Insert query executed successfully.
+[2025-04-28 20:14:53] INFO: Opened database successfully!
+[2025-04-28 20:15:03] INFO: Checked if user exists successfully.
+[2025-04-28 20:15:03] ERROR: Error executing insert query: UNIQUE constraint failed: tokens.token
+[2025-04-28 20:16:58] INFO: Opened database successfully!
+[2025-04-28 20:17:08] INFO: Checked if user exists successfully.
+[2025-04-28 20:17:08] ERROR: Error executing insert query: UNIQUE constraint failed: tokens.token
+[2025-04-28 20:18:50] INFO: Opened database successfully!
+[2025-04-28 20:19:28] INFO: Checked if user exists successfully.
+[2025-04-28 20:19:28] ERROR: Error executing insert query: UNIQUE constraint failed: tokens.token
+[2025-04-28 20:21:17] INFO: Checked if user exists successfully.
+[2025-04-28 20:21:17] ERROR: Error executing insert query: UNIQUE constraint failed: tokens.token
+[2025-04-28 20:25:17] INFO: Opened database successfully!
+[2025-04-28 20:25:36] INFO: Checked if user exists successfully.
+[2025-04-28 20:25:36] ERROR: Error executing insert query: UNIQUE constraint failed: tokens.token
+[2025-04-28 20:28:14] INFO: Opened database successfully!
+[2025-04-28 20:34:55] INFO: Opened database successfully!
+[2025-04-28 20:34:59] INFO: Opened database successfully!
+[2025-04-28 20:35:49] INFO: Opened database successfully!
+[2025-04-28 20:39:51] INFO: Opened database successfully!
+[2025-04-28 20:40:01] INFO: Opened database successfully!
+[2025-04-28 20:40:13] INFO: Opened database successfully!
+[2025-04-28 20:40:36] INFO: Opened database successfully!
+[2025-04-28 20:40:45] INFO: Checked if user exists successfully.
+[2025-04-28 20:40:45] ERROR: Error executing insert query: UNIQUE constraint failed: tokens.token
+[2025-04-28 20:43:15] INFO: Opened database successfully!
+[2025-04-28 20:43:59] INFO: Checked if user exists successfully.
+[2025-04-28 20:43:59] ERROR: Error executing insert query: UNIQUE constraint failed: tokens.token
+[2025-04-28 20:45:22] INFO: Opened database successfully!
+[2025-04-28 21:11:14] INFO: Opened database successfully!
+[2025-04-28 21:11:26] INFO: Checked if user exists successfully.
+[2025-04-28 21:11:26] ERROR: Error executing insert query: UNIQUE constraint failed: tokens.token
+[2025-04-28 21:12:43] INFO: Opened database successfully!
+[2025-04-28 21:12:49] INFO: Checked if user exists successfully.
+[2025-04-28 21:12:49] INFO: Insert query executed successfully.
+[2025-04-28 21:15:05] INFO: Opened database successfully!
+[2025-04-28 21:15:15] INFO: Checked if user exists successfully.
+[2025-04-28 21:15:15] ERROR: Error executing insert query: UNIQUE constraint failed: tokens.token
+[2025-04-28 21:17:24] INFO: Opened database successfully!
+[2025-04-28 21:17:37] INFO: Checked if user exists successfully.
+[2025-04-28 21:17:37] ERROR: Error executing insert query: UNIQUE constraint failed: tokens.token
+[2025-04-28 21:43:56] INFO: Opened database successfully!
+[2025-04-28 21:44:04] INFO: Checked if user exists successfully.
+[2025-04-28 21:44:04] INFO: Insert query executed successfully.
+[2025-04-28 21:44:11] INFO: Queried token TTL successfully.
+[2025-04-28 21:44:11] INFO: Queried username from token successfully.
+[2025-04-28 21:44:11] INFO: Insert query executed successfully.
+[2025-04-28 21:44:11] INFO: Insert query executed successfully.
+[2025-04-28 21:44:35] INFO: Queried token TTL successfully.
+[2025-04-28 21:44:38] INFO: Queried token TTL successfully.
+[2025-04-28 21:44:39] INFO: Queried token TTL successfully.
+[2025-04-28 21:44:42] INFO: Queried token TTL successfully.
+[2025-04-28 21:44:48] INFO: Queried token TTL successfully.
+[2025-04-28 21:44:50] INFO: Queried token TTL successfully.
+[2025-04-28 21:44:56] INFO: Queried token TTL successfully.
+[2025-04-28 21:45:24] INFO: Opened database successfully!
+[2025-04-28 21:45:44] INFO: Opened database successfully!
+[2025-04-28 21:45:51] INFO: Checked if user exists successfully.
+[2025-04-28 21:45:51] ERROR: Error executing insert query: UNIQUE constraint failed: tokens.token
+[2025-04-28 21:45:52] INFO: Queried token TTL successfully.
+[2025-04-28 21:45:54] INFO: Queried token TTL successfully.
+[2025-04-28 21:45:55] INFO: Queried token TTL successfully.
+[2025-04-28 21:47:23] INFO: Queried token TTL successfully.
+[2025-04-28 21:47:41] INFO: Queried token TTL successfully.
+[2025-04-28 21:47:44] INFO: Queried token TTL successfully.
+[2025-04-28 21:47:58] INFO: Queried token TTL successfully.
+[2025-04-28 21:48:19] INFO: Opened database successfully!
+[2025-04-28 21:48:28] INFO: Checked if user exists successfully.
+[2025-04-28 21:48:28] ERROR: Error executing insert query: UNIQUE constraint failed: tokens.token
+[2025-04-28 21:48:28] INFO: Queried token TTL successfully.
+[2025-04-28 21:48:29] INFO: Queried token TTL successfully.
+[2025-04-28 21:48:29] INFO: Queried token TTL successfully.
+[2025-04-28 21:48:30] INFO: Queried token TTL successfully.
+[2025-04-28 21:49:25] INFO: Queried token TTL successfully.
+[2025-04-28 21:49:27] INFO: Queried token TTL successfully.
+[2025-04-28 21:49:27] INFO: Queried token TTL successfully.
+[2025-04-28 21:49:27] INFO: Queried token TTL successfully.
+[2025-04-28 21:49:28] INFO: Queried token TTL successfully.
+[2025-04-28 21:49:28] INFO: Queried token TTL successfully.
+[2025-04-28 21:49:28] INFO: Queried token TTL successfully.
+[2025-04-28 21:49:28] INFO: Queried token TTL successfully.
+[2025-04-28 21:49:29] INFO: Queried token TTL successfully.
+[2025-04-28 21:49:29] INFO: Queried token TTL successfully.
+[2025-04-28 21:49:29] INFO: Queried token TTL successfully.
+[2025-04-28 21:49:29] INFO: Queried token TTL successfully.
+[2025-04-28 21:49:29] INFO: Queried token TTL successfully.
+[2025-04-28 21:49:29] INFO: Queried token TTL successfully.
+[2025-04-28 21:49:30] INFO: Queried token TTL successfully.
+[2025-04-28 21:49:30] INFO: Queried token TTL successfully.
+[2025-04-28 21:49:30] INFO: Queried token TTL successfully.
+[2025-04-28 21:49:30] INFO: Queried token TTL successfully.
+[2025-04-28 21:49:30] INFO: Queried token TTL successfully.
+[2025-04-28 21:50:00] INFO: Opened database successfully!
+[2025-04-28 21:50:11] INFO: Checked if user exists successfully.
+[2025-04-28 21:50:11] INFO: Insert query executed successfully.
+[2025-04-28 21:50:13] INFO: Queried token TTL successfully.
+[2025-04-28 21:50:24] INFO: Queried token TTL successfully.
+[2025-04-28 21:50:24] INFO: Queried username from token successfully.
+[2025-04-28 21:50:24] INFO: Insert query executed successfully.
+[2025-04-28 21:50:24] INFO: Insert query executed successfully.
+[2025-04-28 21:50:29] INFO: Queried token TTL successfully.
+[2025-04-28 21:50:30] INFO: Queried token TTL successfully.
+[2025-04-28 21:50:30] INFO: Queried token TTL successfully.
+[2025-04-28 21:50:30] INFO: Queried token TTL successfully.
+[2025-04-28 21:50:31] INFO: Queried token TTL successfully.
+[2025-04-28 21:50:31] INFO: Queried token TTL successfully.
+[2025-04-28 21:50:32] INFO: Queried token TTL successfully.
+[2025-04-28 21:51:17] INFO: Opened database successfully!
+[2025-04-28 21:51:29] INFO: Checked if user exists successfully.
+[2025-04-28 21:51:30] INFO: Queried token TTL successfully.
+[2025-04-28 21:51:30] INFO: Queried username from token successfully.
+[2025-04-28 21:51:30] INFO: Insert query executed successfully.
+[2025-04-28 21:51:30] INFO: Insert query executed successfully.
+[2025-04-28 21:51:30] INFO: Queried token TTL successfully.
+[2025-04-28 21:51:30] INFO: Queried username from token successfully.
+[2025-04-28 21:51:30] INFO: Insert query executed successfully.
+[2025-04-28 21:51:30] ERROR: Error executing insert query: UNIQUE constraint failed: tokens.token
+[2025-04-28 21:51:31] INFO: Queried token TTL successfully.
+[2025-04-28 21:51:31] INFO: Queried username from token successfully.
+[2025-04-28 21:51:31] INFO: Insert query executed successfully.
+[2025-04-28 21:51:31] ERROR: Error executing insert query: UNIQUE constraint failed: tokens.token
+[2025-04-28 21:51:31] INFO: Queried token TTL successfully.
+[2025-04-28 21:51:31] INFO: Queried username from token successfully.
+[2025-04-28 21:51:31] INFO: Insert query executed successfully.
+[2025-04-28 21:51:31] ERROR: Error executing insert query: UNIQUE constraint failed: tokens.token
+[2025-04-28 21:51:32] INFO: Queried token TTL successfully.
+[2025-04-28 21:51:32] INFO: Queried username from token successfully.
+[2025-04-28 21:51:32] INFO: Insert query executed successfully.
+[2025-04-28 21:51:32] ERROR: Error executing insert query: UNIQUE constraint failed: tokens.token
+[2025-04-28 21:51:33] INFO: Queried token TTL successfully.
+[2025-04-28 21:51:33] INFO: Queried username from token successfully.
+[2025-04-28 21:51:33] INFO: Insert query executed successfully.
+[2025-04-28 21:51:33] ERROR: Error executing insert query: UNIQUE constraint failed: tokens.token
+[2025-04-28 21:51:33] INFO: Queried token TTL successfully.
+[2025-04-28 21:51:33] INFO: Queried username from token successfully.
+[2025-04-28 21:51:33] INFO: Insert query executed successfully.
+[2025-04-28 21:51:33] ERROR: Error executing insert query: UNIQUE constraint failed: tokens.token
+[2025-04-28 21:51:34] INFO: Queried token TTL successfully.
+[2025-04-28 21:51:34] INFO: Queried username from token successfully.
+[2025-04-28 21:51:34] INFO: Insert query executed successfully.
+[2025-04-28 21:51:34] ERROR: Error executing insert query: UNIQUE constraint failed: tokens.token
+[2025-04-28 21:51:34] INFO: Queried token TTL successfully.
+[2025-04-28 21:51:34] INFO: Queried username from token successfully.
+[2025-04-28 21:51:34] INFO: Insert query executed successfully.
+[2025-04-28 21:51:34] ERROR: Error executing insert query: UNIQUE constraint failed: tokens.token
+[2025-04-28 21:51:34] INFO: Queried token TTL successfully.
+[2025-04-28 21:51:34] INFO: Queried username from token successfully.
+[2025-04-28 21:51:34] INFO: Insert query executed successfully.
+[2025-04-28 21:51:34] ERROR: Error executing insert query: UNIQUE constraint failed: tokens.token
+[2025-04-28 21:51:35] INFO: Queried token TTL successfully.
+[2025-04-28 21:51:35] INFO: Queried username from token successfully.
+[2025-04-28 21:51:35] INFO: Insert query executed successfully.
+[2025-04-28 21:51:35] ERROR: Error executing insert query: UNIQUE constraint failed: tokens.token
+[2025-04-28 21:51:35] INFO: Queried token TTL successfully.
+[2025-04-28 21:51:35] INFO: Queried username from token successfully.
+[2025-04-28 21:51:35] INFO: Insert query executed successfully.
+[2025-04-28 21:51:35] ERROR: Error executing insert query: UNIQUE constraint failed: tokens.token
+[2025-04-28 21:51:35] INFO: Queried token TTL successfully.
+[2025-04-28 21:51:35] INFO: Queried username from token successfully.
+[2025-04-28 21:51:35] INFO: Insert query executed successfully.
+[2025-04-28 21:51:35] ERROR: Error executing insert query: UNIQUE constraint failed: tokens.token
+[2025-04-28 21:51:36] INFO: Queried token TTL successfully.
+[2025-04-28 21:51:36] INFO: Queried username from token successfully.
+[2025-04-28 21:51:36] INFO: Insert query executed successfully.
+[2025-04-28 21:51:36] ERROR: Error executing insert query: UNIQUE constraint failed: tokens.token
+[2025-04-28 21:51:36] INFO: Queried token TTL successfully.
+[2025-04-28 21:51:36] INFO: Queried username from token successfully.
+[2025-04-28 21:51:36] INFO: Insert query executed successfully.
+[2025-04-28 21:51:36] ERROR: Error executing insert query: UNIQUE constraint failed: tokens.token
+[2025-04-28 21:51:36] INFO: Queried token TTL successfully.
+[2025-04-28 21:51:36] INFO: Queried username from token successfully.
+[2025-04-28 21:51:36] INFO: Insert query executed successfully.
+[2025-04-28 21:51:36] ERROR: Error executing insert query: UNIQUE constraint failed: tokens.token
+[2025-04-28 21:51:37] INFO: Queried token TTL successfully.
+[2025-04-28 21:51:37] INFO: Queried username from token successfully.
+[2025-04-28 21:51:37] INFO: Insert query executed successfully.
+[2025-04-28 21:51:37] ERROR: Error executing insert query: UNIQUE constraint failed: tokens.token
+[2025-04-28 21:51:37] INFO: Queried token TTL successfully.
+[2025-04-28 21:51:37] INFO: Queried username from token successfully.
+[2025-04-28 21:51:37] INFO: Insert query executed successfully.
+[2025-04-28 21:51:37] ERROR: Error executing insert query: UNIQUE constraint failed: tokens.token
+[2025-04-28 21:51:37] INFO: Queried token TTL successfully.
+[2025-04-28 21:51:37] INFO: Queried username from token successfully.
+[2025-04-28 21:51:37] INFO: Insert query executed successfully.
+[2025-04-28 21:51:37] ERROR: Error executing insert query: UNIQUE constraint failed: tokens.token
+[2025-04-28 21:51:37] INFO: Queried token TTL successfully.
+[2025-04-28 21:51:37] INFO: Queried username from token successfully.
+[2025-04-28 21:51:37] INFO: Insert query executed successfully.
+[2025-04-28 21:51:37] ERROR: Error executing insert query: UNIQUE constraint failed: tokens.token
+[2025-04-28 21:51:38] INFO: Queried token TTL successfully.
+[2025-04-28 21:51:38] INFO: Queried username from token successfully.
+[2025-04-28 21:51:38] INFO: Insert query executed successfully.
+[2025-04-28 21:51:38] ERROR: Error executing insert query: UNIQUE constraint failed: tokens.token
+[2025-04-28 21:51:38] INFO: Queried token TTL successfully.
+[2025-04-28 21:51:38] INFO: Queried username from token successfully.
+[2025-04-28 21:51:38] INFO: Insert query executed successfully.
+[2025-04-28 21:51:38] ERROR: Error executing insert query: UNIQUE constraint failed: tokens.token
+[2025-04-28 21:51:38] INFO: Queried token TTL successfully.
+[2025-04-28 21:51:38] INFO: Queried username from token successfully.
+[2025-04-28 21:51:38] INFO: Insert query executed successfully.
+[2025-04-28 21:51:38] ERROR: Error executing insert query: UNIQUE constraint failed: tokens.token
+[2025-04-28 21:51:38] INFO: Queried token TTL successfully.
+[2025-04-28 21:51:38] INFO: Queried username from token successfully.
+[2025-04-28 21:51:38] INFO: Insert query executed successfully.
+[2025-04-28 21:51:38] ERROR: Error executing insert query: UNIQUE constraint failed: tokens.token
+[2025-04-28 21:51:38] INFO: Queried token TTL successfully.
+[2025-04-28 21:51:38] INFO: Queried username from token successfully.
+[2025-04-28 21:51:38] INFO: Insert query executed successfully.
+[2025-04-28 21:51:38] ERROR: Error executing insert query: UNIQUE constraint failed: tokens.token
+[2025-04-28 21:51:38] INFO: Queried token TTL successfully.
+[2025-04-28 21:51:38] INFO: Queried username from token successfully.
+[2025-04-28 21:51:38] INFO: Insert query executed successfully.
+[2025-04-28 21:51:38] ERROR: Error executing insert query: UNIQUE constraint failed: tokens.token
+[2025-04-28 21:51:39] INFO: Queried token TTL successfully.
+[2025-04-28 21:51:39] INFO: Queried username from token successfully.
+[2025-04-28 21:51:39] INFO: Insert query executed successfully.
+[2025-04-28 21:51:39] ERROR: Error executing insert query: UNIQUE constraint failed: tokens.token
+[2025-04-28 21:51:39] INFO: Queried token TTL successfully.
+[2025-04-28 21:51:39] INFO: Queried username from token successfully.
+[2025-04-28 21:51:39] INFO: Insert query executed successfully.
+[2025-04-28 21:51:39] ERROR: Error executing insert query: UNIQUE constraint failed: tokens.token
+[2025-04-28 21:51:39] INFO: Queried token TTL successfully.
+[2025-04-28 21:51:39] INFO: Queried username from token successfully.
+[2025-04-28 21:51:39] INFO: Insert query executed successfully.
+[2025-04-28 21:51:39] ERROR: Error executing insert query: UNIQUE constraint failed: tokens.token
+[2025-04-28 21:51:39] INFO: Queried token TTL successfully.
+[2025-04-28 21:51:39] INFO: Queried username from token successfully.
+[2025-04-28 21:51:39] INFO: Insert query executed successfully.
+[2025-04-28 21:51:39] ERROR: Error executing insert query: UNIQUE constraint failed: tokens.token
+[2025-04-28 21:51:39] INFO: Queried token TTL successfully.
+[2025-04-28 21:51:39] INFO: Queried username from token successfully.
+[2025-04-28 21:51:39] INFO: Insert query executed successfully.
+[2025-04-28 21:51:39] ERROR: Error executing insert query: UNIQUE constraint failed: tokens.token
+[2025-04-28 21:51:58] INFO: Opened database successfully!
+[2025-04-28 21:53:28] INFO: Checked if user exists successfully.
+[2025-04-28 21:53:28] INFO: Insert query executed successfully.
+[2025-04-28 21:53:30] INFO: Queried token TTL successfully.
+[2025-04-28 21:53:31] INFO: Queried token TTL successfully.
+[2025-04-28 21:53:32] INFO: Queried token TTL successfully.
+[2025-04-28 21:53:33] INFO: Queried token TTL successfully.
+[2025-04-28 21:53:34] INFO: Queried token TTL successfully.
+[2025-04-28 21:53:35] INFO: Queried token TTL successfully.
+[2025-04-28 21:53:36] INFO: Queried token TTL successfully.
+[2025-04-28 21:54:41] INFO: Queried token TTL successfully.
+[2025-04-28 21:54:42] INFO: Queried token TTL successfully.
+[2025-04-28 21:54:42] INFO: Queried token TTL successfully.
+[2025-04-28 21:54:43] INFO: Queried token TTL successfully.
+[2025-04-28 21:54:43] INFO: Queried token TTL successfully.
+[2025-04-28 21:54:43] INFO: Queried token TTL successfully.
+[2025-04-28 21:54:43] INFO: Queried token TTL successfully.
+[2025-04-28 21:54:43] INFO: Queried token TTL successfully.
+[2025-04-28 21:54:43] INFO: Queried token TTL successfully.
+[2025-04-28 21:54:44] INFO: Queried token TTL successfully.
+[2025-04-28 21:54:44] INFO: Queried token TTL successfully.
+[2025-04-28 21:54:44] INFO: Queried token TTL successfully.
+[2025-04-28 21:54:44] INFO: Queried token TTL successfully.
+[2025-04-28 21:54:44] INFO: Queried token TTL successfully.
+[2025-04-28 21:54:45] INFO: Queried token TTL successfully.
+[2025-04-28 21:54:45] INFO: Queried token TTL successfully.
+[2025-04-28 21:54:45] INFO: Queried token TTL successfully.
+[2025-04-28 21:54:45] INFO: Queried token TTL successfully.
+[2025-04-28 21:54:45] INFO: Queried token TTL successfully.
+[2025-04-28 21:54:46] INFO: Queried token TTL successfully.
+[2025-04-28 21:54:46] INFO: Queried token TTL successfully.
+[2025-04-28 21:54:46] INFO: Queried token TTL successfully.
+[2025-04-28 21:54:46] INFO: Queried token TTL successfully.

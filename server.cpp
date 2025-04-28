@@ -1,4 +1,5 @@
 #include "./tcp_server/tcp_ssl_server.h"
+#include "./tcp_client/tcp_ssl_client.h"
 #include <iostream>
 #include <string>
 #include <thread>
@@ -9,7 +10,7 @@ void handleClient(CTCPSSLServer& server, ASecureSocket::SSLSocket clientSocket) 
     std::cout << "New client connected!" << std::endl;
 
     while (true) {
-        char buffer[256];
+        char buffer[1024];
         int bytesReceived = server.Receive(clientSocket, buffer, sizeof(buffer), false);
         if (bytesReceived > 0) {
             std::string receivedMessage(buffer, bytesReceived);
@@ -52,6 +53,7 @@ int main() {
             std::cerr << "Failed to accept client connection." << std::endl;
         }
     }
+
     for (auto& thread : clientThreads) {
         if (thread.joinable()) {
             thread.join();

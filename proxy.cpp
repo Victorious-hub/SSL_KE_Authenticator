@@ -8,89 +8,152 @@
 
 std::atomic<bool> stopThreads(false);
 
-// Function to handle authentication requests
-void handleAuthRequest(CTCPSSLServer& proxyServer, ASecureSocket::SSLSocket& clientSocket, CTCPSSLClient& proxyAuthyClient) {
+// Function to handle authentication with the auth server
+bool authenticateWithAuthServer(CTCPSSLServer& proxyServer, ASecureSocket::SSLSocket& clientSocket, CTCPSSLClient& proxyAuthyClient, std::string& token) {
     char buffer[1024];
-    while (!stopThreads) {
-        int bytesReceived = proxyServer.Receive(clientSocket, buffer, sizeof(buffer), false);
-        if (bytesReceived <= 0) {
-            std::cerr << "[Proxy] Client disconnected or error occurred during authentication." << std::endl;
-            stopThreads = true;
-            break;
-        }
+    int bytesReceived = proxyServer.Receive(clientSocket, buffer, sizeof(buffer), false);
+    if (bytesReceived <= 0) {
+        std::cerr << "[Proxy] Client disconnected or error occurred during authentication." << std::endl;
+        return false;
+    }
 
-        std::string authRequest(buffer, bytesReceived);
-        std::cout << "[Proxy] Forwarding authentication request to auth_server: " << authRequest << std::endl;
+    std::string clientMessage(buffer, bytesReceived);
+    std::cout << "[Proxy] Received message from client: " << clientMessage << std::endl;
 
-        if (!proxyAuthyClient.Send(authRequest)) {
-            std::cerr << "[Proxy] Failed to forward authentication request to auth_server." << std::endl;
-            stopThreads = true;
-            break;
+    if (clientMessage.rfind("AUTH ", 0) == 0) {
+        // Forward the AUTH request to the auth server
+        if (!proxyAuthyClient.Send(clientMessage)) {
+            std::cerr << "[Proxy] Failed to send AUTH request to auth_server." << std::endl;
+            proxyServer.Send(clientSocket, "ERROR: Authentication server unavailable.");
+            return false;
         }
 
         char authResponse[1024] = {0};
         int authBytesReceived = proxyAuthyClient.Receive(authResponse, sizeof(authResponse), false);
         if (authBytesReceived <= 0) {
             std::cerr << "[Proxy] Failed to receive token from auth_server." << std::endl;
-            stopThreads = true;
-            break;
+            proxyServer.Send(clientSocket, "ERROR: Authentication failed.");
+            return false;
         }
 
-        std::string token(authResponse, authBytesReceived);
+        token = std::string(authResponse, authBytesReceived);
         std::cout << "[Proxy] Received token from auth_server: " << token << std::endl;
 
         // Send the token back to the client
         if (!proxyServer.Send(clientSocket, token)) {
             std::cerr << "[Proxy] Failed to send token back to client." << std::endl;
-            stopThreads = true;
-            break;
+            return false;
         }
+
+        return true;
     }
+
+    std::cerr << "[Proxy] Invalid authentication request format." << std::endl;
+    proxyServer.Send(clientSocket, "ERROR: Invalid authentication request.");
+    return false;
 }
 
-// Function to handle regular client-to-server communication
-void transferData(CTCPSSLServer& server, ASecureSocket::SSLSocket& clientSocket, CTCPSSLClient& proxyClient) {
+// Function to verify the token with the auth server
+bool verifyTokenWithAuthServer(CTCPSSLClient& proxyAuthyClient, const std::string& token) {
+    std::string authRequest = "VERIFY " + token;
+    std::cout << "[Debug] Sending VERIFY request to auth_server: " << authRequest << std::endl;
+
+    if (!proxyAuthyClient.Send(authRequest)) {
+        std::cerr << "[Proxy] Failed to send token verification request to auth_server." << std::endl;
+        return false;
+    }
+
+    char authResponse[1024] = {0};
+    int authBytesReceived = proxyAuthyClient.Receive(authResponse, sizeof(authResponse), false);
+    if (authBytesReceived <= 0) {
+        std::cerr << "[Proxy] Failed to receive verification response from auth_server." << std::endl;
+        return false;
+    }
+
+    std::string authResult(authResponse, authBytesReceived);
+    std::cout << "[Debug] Received verification response from auth_server: " << authResult << std::endl;
+
+    return authResult == "VERIFIED";
+}
+
+// Function to forward messages to the server
+bool forwardMessageToServer(CTCPSSLClient& proxyClient, const std::string& userMessage, std::string& serverResponse) {
+    if (!proxyClient.Send(userMessage)) {
+        std::cerr << "[Proxy] Failed to forward message to server." << std::endl;
+        return false;
+    }
+
+    char buffer[1024] = {0};
+    int bytesReceived = proxyClient.Receive(buffer, sizeof(buffer), false);
+    if (bytesReceived <= 0) {
+        std::cerr << "[Proxy] Failed to receive response from server." << std::endl;
+        return false;
+    }
+
+    serverResponse = std::string(buffer, bytesReceived);
+    return true;
+}
+
+std::string trim(const std::string& str) {
+    size_t start = str.find_first_not_of(" \t\n\r");
+    size_t end = str.find_last_not_of(" \t\n\r");
+    return (start == std::string::npos) ? "" : str.substr(start, end - start + 1);
+}
+
+
+// Function to handle client requests after authentication
+void handleClientRequests(CTCPSSLServer& proxyServer, ASecureSocket::SSLSocket& clientSocket, CTCPSSLClient& proxyAuthyClient, CTCPSSLClient& proxyClient, const std::string& token) {
     char buffer[1024];
     while (!stopThreads) {
-        int bytesReceived = server.Receive(clientSocket, buffer, sizeof(buffer), false);
+        int bytesReceived = proxyServer.Receive(clientSocket, buffer, sizeof(buffer), false);
         if (bytesReceived <= 0) {
-            std::cerr << "[Proxy] Client disconnected or error occurred while receiving data." << std::endl;
-            stopThreads = true;
+            std::cerr << "[Proxy] Client disconnected or error occurred." << std::endl;
             break;
         }
 
-        std::string data(buffer, bytesReceived);
-        std::cout << "[Proxy] Forwarding to server: " << data << std::endl;
+        std::string clientMessage(buffer, bytesReceived);
+        std::cout << "[Proxy] Received message from client: " << clientMessage << std::endl;
 
-        if (!proxyClient.Send(data)) {
-            std::cerr << "[Proxy] Failed to forward data to server." << std::endl;
-            stopThreads = true;
+        size_t tokenPos = clientMessage.find("Token: ");
+        size_t messagePos = clientMessage.find("Message: ");
+        if (tokenPos == std::string::npos || messagePos == std::string::npos || tokenPos >= messagePos) {
+            std::cerr << "[Proxy] Invalid message format from client." << std::endl;
+            proxyServer.Send(clientSocket, "ERROR: Invalid message format.");
+            continue;
+        }
+
+        std::string receivedToken = trim(clientMessage.substr(tokenPos + 7, messagePos - (tokenPos + 7)));
+        std::string userMessage = clientMessage.substr(messagePos + 9);
+
+        // Debugging tokens
+        std::cout << "[Debug] Received token: [" << receivedToken << "]" << std::endl;
+        std::cout << "[Debug] Expected token: [" << token << "]" << std::endl;
+
+        if (receivedToken != token) {
+            std::cerr << "[Proxy] Token mismatch." << std::endl;
+            proxyServer.Send(clientSocket, "ERROR: Invalid token.");
+            continue;
+        }
+
+        if (!verifyTokenWithAuthServer(proxyAuthyClient, receivedToken)) {
+            std::cerr << "[Proxy] Token verification failed." << std::endl;
+            proxyServer.Send(clientSocket, "ERROR: Invalid token.");
+            continue;
+        }
+
+        std::string serverResponse;
+        if (!forwardMessageToServer(proxyClient, userMessage, serverResponse)) {
+            proxyServer.Send(clientSocket, "ERROR: Server unavailable.");
+            break;
+        }
+
+        if (!proxyServer.Send(clientSocket, serverResponse)) {
+            std::cerr << "[Proxy] Failed to send server response back to client." << std::endl;
             break;
         }
     }
 }
 
-// Function to handle server-to-client communication
-void transferDataReverse(CTCPSSLServer& server, ASecureSocket::SSLSocket& clientSocket, CTCPSSLClient& proxyClient) {
-    char buffer[1024];
-    while (!stopThreads) {
-        int bytesReceived = proxyClient.Receive(buffer, sizeof(buffer), false);
-        if (bytesReceived <= 0) {
-            std::cerr << "[Proxy] Server disconnected or error occurred while receiving data." << std::endl;
-            stopThreads = true;
-            break;
-        }
-
-        std::string data(buffer, bytesReceived);
-        std::cout << "[Proxy] Forwarding to client: " << data << std::endl;
-
-        if (!server.Send(clientSocket, data)) {
-            std::cerr << "[Proxy] Failed to forward data to client." << std::endl;
-            stopThreads = true;
-            break;
-        }
-    }
-}
 
 int main() {
     std::string clientPort = "9090";
@@ -121,18 +184,18 @@ int main() {
     ASecureSocket::SSLSocket clientSocket;
     if (proxyServer.Listen(clientSocket)) {
         std::cout << "[Proxy] Client connected to proxy on port " << clientPort << std::endl;
+
         if (proxyAuthyClient.Connect(authServerAddress, authServerPort)) {
             std::cout << "[Proxy] Connected to auth_server at " << authServerAddress << ":" << authServerPort << std::endl;
-            handleAuthRequest(proxyServer, clientSocket, proxyAuthyClient);
-            if (proxyClient.Connect(serverAddress, serverPort)) {
-                std::cout << "[Proxy] Connected to server at " << serverAddress << ":" << serverPort << std::endl;
-                std::thread clientToServerThread(transferData, std::ref(proxyServer), std::ref(clientSocket), std::ref(proxyClient));
-                std::thread serverToClientThread(transferDataReverse, std::ref(proxyServer), std::ref(clientSocket), std::ref(proxyClient));
 
-                clientToServerThread.join();
-                serverToClientThread.join();
-            } else {
-                std::cerr << "[Proxy] Failed to connect to server." << std::endl;
+            std::string token;
+            if (authenticateWithAuthServer(proxyServer, clientSocket, proxyAuthyClient, token)) {
+                if (proxyClient.Connect(serverAddress, serverPort)) {
+                    std::cout << "[Proxy] Connected to server at " << serverAddress << ":" << serverPort << std::endl;
+                    handleClientRequests(proxyServer, clientSocket, proxyAuthyClient, proxyClient, token);
+                } else {
+                    std::cerr << "[Proxy] Failed to connect to server." << std::endl;
+                }
             }
         } else {
             std::cerr << "[Proxy] Failed to connect to auth_server." << std::endl;

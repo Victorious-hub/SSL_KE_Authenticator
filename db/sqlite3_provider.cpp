@@ -1,6 +1,6 @@
 #include <iostream>
 #include <sstream>
-
+#include <ctime>
 #include <sqlite3.h>
 
 #include "sqlite3_provider.h"
@@ -19,16 +19,14 @@ SQLite3Provider::~SQLite3Provider() {
     sqlite3_close(db);
 }
 
-
-void SQLite3Provider::insert(const std::string& tableName, const std::string& values) {
-    std::string sql = "INSERT INTO " + tableName + " VALUES (" + values + ");";
+void SQLite3Provider::insert(const std::string& sql) {
     char* errMsg = nullptr;
     int exit = sqlite3_exec(db, sql.c_str(), nullptr, nullptr, &errMsg);
     if (exit != SQLITE_OK) {
-        logger.log(ERROR, "Error inserting into table '" + tableName + "': " + errMsg);
+        logger.log(ERROR, "Error executing insert query: " + std::string(errMsg));
         sqlite3_free(errMsg);
     } else {
-        logger.log(INFO, "Inserted values into table '" + tableName + "' successfully.");
+        logger.log(INFO, "Insert query executed successfully.");
     }
 }
 
@@ -80,31 +78,81 @@ void SQLite3Provider::queryTable(const std::string& tableName) {
 }
 
 bool SQLite3Provider::isUserExists(const std::string& username, const std::string& password) {
-    std::string sql = "SELECT COUNT(*) FROM users WHERE username = '" + username + "' AND password = '" + password + "';";
+    std::string sql = "SELECT EXISTS(SELECT 1 FROM users WHERE username = '" + username + "' AND password = '" + password + "');";
     char* errMsg = nullptr;
-    int userCount = 0;
+    bool exists = false;
 
     auto callback = [](void* data, int argc, char** argv, char** colNames) -> int {
-        int* userCount = static_cast<int*>(data);
-        *userCount = std::stoi(argv[0]);
+        if (argc > 0 && argv[0]) { // Ensure argv[0] is not NULL
+            bool* exists = static_cast<bool*>(data);
+            *exists = std::stoi(argv[0]) != 0; // Convert the result to a boolean
+        }
         return 0;
     };
 
-    int exit = sqlite3_exec(db, sql.c_str(), callback, &userCount, &errMsg);
+    int exit = sqlite3_exec(db, sql.c_str(), callback, &exists, &errMsg);
     if (exit != SQLITE_OK) {
-        // logger.log(ERROR, "Error checking if user exists: " + errMsg);
-        // logger.log(ERROR, "Error checking if user exists: " "': " + errMsg);
+        logger.log(ERROR, "Error checking if user exists: " + std::string(errMsg));
         sqlite3_free(errMsg);
     } else {
         logger.log(INFO, "Checked if user exists successfully.");
     }
 
-    return userCount > 0;
+    std::cout << sql << " -> Result: " << (exists ? 1 : 0) << std::endl; // Debug output
+
+    return exists;
 }
 
-// int main() {
-//     SQLite3Provider db("database", "logfile.txt");
-//     // db.insert("users", "'1', 'admin', 'password123'");
-//     db.queryTable("users");
-//     return 0;
-// }
+
+bool SQLite3Provider::getTokenTTL(const std::string& token, std::time_t& ttl) {
+    std::string sql = "SELECT ttl FROM tokens WHERE token = '" + token + "';";
+    char* errMsg = nullptr;
+    bool tokenExists = false;
+
+    auto callback = [](void* data, int argc, char** argv, char** colNames) -> int {
+        if (argc > 0 && argv[0]) {
+            std::time_t* ttl = static_cast<std::time_t*>(data);
+            *ttl = std::stoll(argv[0]); // Convert the TTL value to a time_t
+            return 0;
+        }
+        return 1; // No rows found
+    };
+
+    int exit = sqlite3_exec(db, sql.c_str(), callback, &ttl, &errMsg);
+    if (exit != SQLITE_OK) {
+        logger.log(ERROR, "Error querying token TTL: " + std::string(errMsg));
+        sqlite3_free(errMsg);
+    } else {
+        logger.log(INFO, "Queried token TTL successfully.");
+        tokenExists = true;
+    }
+
+    return tokenExists;
+}
+
+
+bool SQLite3Provider::getUsernameFromToken(const std::string& token, std::string& username) {
+    std::string sql = "SELECT username FROM tokens WHERE token = '" + token + "';";
+    char* errMsg = nullptr;
+    bool tokenExists = false;
+
+    auto callback = [](void* data, int argc, char** argv, char** colNames) -> int {
+        if (argc > 0 && argv[0]) {
+            std::string* username = static_cast<std::string*>(data);
+            *username = argv[0];
+            return 0;
+        }
+        return 1; // No rows found
+    };
+
+    int exit = sqlite3_exec(db, sql.c_str(), callback, &username, &errMsg);
+    if (exit != SQLITE_OK) {
+        logger.log(ERROR, "Error querying username from token: " + std::string(errMsg));
+        sqlite3_free(errMsg);
+    } else {
+        logger.log(INFO, "Queried username from token successfully.");
+        tokenExists = true;
+    }
+
+    return tokenExists;
+}
