@@ -166,44 +166,71 @@ int main() {
         std::cout << message << std::endl;
     };
 
+    // Initialize the proxy server
     CTCPSSLServer proxyServer(logger, clientPort);
     proxyServer.SetSSLCertFile("/home/shyskov/Documents/libs/sem6/kursach/cert/certs/proxy.crt");
     proxyServer.SetSSLKeyFile("/home/shyskov/Documents/libs/sem6/kursach/cert/certs/proxy.key");
     proxyServer.SetSSLCerthAuth("/home/shyskov/Documents/libs/sem6/kursach/cert/certs/root.crt");
 
-    CTCPSSLClient proxyClient(logger);
-    proxyClient.SetSSLCertFile("/home/shyskov/Documents/libs/sem6/kursach/cert/certs/proxy.crt");
-    proxyClient.SetSSLKeyFile("/home/shyskov/Documents/libs/sem6/kursach/cert/certs/proxy.key");
-    proxyClient.SetSSLCerthAuth("/home/shyskov/Documents/libs/sem6/kursach/cert/certs/root.crt");
+    // Vector to store threads for handling multiple clients
+    std::vector<std::thread> clientThreads;
 
-    CTCPSSLClient proxyAuthyClient(logger);
-    proxyAuthyClient.SetSSLCertFile("/home/shyskov/Documents/libs/sem6/kursach/cert/certs/proxy.crt");
-    proxyAuthyClient.SetSSLKeyFile("/home/shyskov/Documents/libs/sem6/kursach/cert/certs/proxy.key");
-    proxyAuthyClient.SetSSLCerthAuth("/home/shyskov/Documents/libs/sem6/kursach/cert/certs/root.crt");
+    while (true) {
+        ASecureSocket::SSLSocket clientSocket;
 
-    ASecureSocket::SSLSocket clientSocket;
-    if (proxyServer.Listen(clientSocket)) {
-        std::cout << "[Proxy] Client connected to proxy on port " << clientPort << std::endl;
+        // Listen for a new client connection
+        if (proxyServer.Listen(clientSocket)) {
+            std::cout << "[Proxy] New client connected to proxy on port " << clientPort << std::endl;
 
-        if (proxyAuthyClient.Connect(authServerAddress, authServerPort)) {
-            std::cout << "[Proxy] Connected to auth_server at " << authServerAddress << ":" << authServerPort << std::endl;
+            // Create a new thread for each client connection
+            clientThreads.emplace_back(std::thread(
+                [](CTCPSSLServer& proxyServer, ASecureSocket::SSLSocket clientSocket, const std::string& authServerAddress, const std::string& authServerPort, const std::string& serverAddress, const std::string& serverPort) {
+                    auto logger = [](const std::string& message) {
+                        std::cout << message << std::endl;
+                    };
 
-            std::string token;
-            if (authenticateWithAuthServer(proxyServer, clientSocket, proxyAuthyClient, token)) {
-                if (proxyClient.Connect(serverAddress, serverPort)) {
-                    std::cout << "[Proxy] Connected to server at " << serverAddress << ":" << serverPort << std::endl;
-                    handleClientRequests(proxyServer, clientSocket, proxyAuthyClient, proxyClient, token);
-                } else {
-                    std::cerr << "[Proxy] Failed to connect to server." << std::endl;
-                }
-            }
+                    // Initialize the auth server client
+                    CTCPSSLClient proxyAuthyClient(logger);
+                    proxyAuthyClient.SetSSLCertFile("/home/shyskov/Documents/libs/sem6/kursach/cert/certs/proxy.crt");
+                    proxyAuthyClient.SetSSLKeyFile("/home/shyskov/Documents/libs/sem6/kursach/cert/certs/proxy.key");
+                    proxyAuthyClient.SetSSLCerthAuth("/home/shyskov/Documents/libs/sem6/kursach/cert/certs/root.crt");
+
+                    // Initialize the main server client
+                    CTCPSSLClient proxyClient(logger);
+                    proxyClient.SetSSLCertFile("/home/shyskov/Documents/libs/sem6/kursach/cert/certs/proxy.crt");
+                    proxyClient.SetSSLKeyFile("/home/shyskov/Documents/libs/sem6/kursach/cert/certs/proxy.key");
+                    proxyClient.SetSSLCerthAuth("/home/shyskov/Documents/libs/sem6/kursach/cert/certs/root.crt");
+
+                    if (proxyAuthyClient.Connect(authServerAddress, authServerPort)) {
+                        std::cout << "[Proxy] Connected to auth_server at " << authServerAddress << ":" << authServerPort << std::endl;
+
+                        std::string token;
+                        if (authenticateWithAuthServer(proxyServer, clientSocket, proxyAuthyClient, token)) {
+                            if (proxyClient.Connect(serverAddress, serverPort)) {
+                                std::cout << "[Proxy] Connected to server at " << serverAddress << ":" << serverPort << std::endl;
+                                handleClientRequests(proxyServer, clientSocket, proxyAuthyClient, proxyClient, token);
+                            } else {
+                                std::cerr << "[Proxy] Failed to connect to server." << std::endl;
+                            }
+                        }
+                    } else {
+                        std::cerr << "[Proxy] Failed to connect to auth_server." << std::endl;
+                    }
+
+                    proxyServer.Disconnect(clientSocket);
+                    std::cout << "[Proxy] Client disconnected." << std::endl;
+                },
+                std::ref(proxyServer), std::move(clientSocket), authServerAddress, authServerPort, serverAddress, serverPort));
         } else {
-            std::cerr << "[Proxy] Failed to connect to auth_server." << std::endl;
+            std::cerr << "[Proxy] Failed to accept client connection." << std::endl;
         }
+    }
 
-        proxyServer.Disconnect(clientSocket);
-    } else {
-        std::cerr << "[Proxy] Failed to start proxy server." << std::endl;
+    // Join all threads before exiting (optional, if the server is stopped)
+    for (auto& thread : clientThreads) {
+        if (thread.joinable()) {
+            thread.join();
+        }
     }
 
     return 0;
