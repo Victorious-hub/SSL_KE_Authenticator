@@ -16,6 +16,12 @@ PROXY_TARGET = proxy
 AUTH_SOURCES = auth_server.cpp ./utils/token_manager.cpp ./utils/logger.cpp ./db/sqlite3_provider.cpp ./tcp_server/tcp_server.cpp ./tcp_server/tcp_ssl_server.cpp ./socket/secure_socket.cpp ./socket/socket.cpp
 AUTH_TARGET = auth_server
 
+SQLITE3_SCRIPT_SOURCES = sqlite3_user.cpp ./db/sqlite3_provider.cpp ./utils/logger.cpp
+SQLITE3_SCRIPT_TARGET = sqlite3_user
+
+$(SQLITE3_SCRIPT_TARGET): $(SQLITE3_SCRIPT_SOURCES)
+	$(CXX) $(CXXFLAGS) $(SQLITE3_SCRIPT_SOURCES) -o $(SQLITE3_SCRIPT_TARGET) -lssl -lcrypto -lsqlite3
+
 $(SERVER_TARGET): $(SERVER_SOURCES)
 	$(CXX) $(CXXFLAGS) $(SERVER_SOURCES) -o $(SERVER_TARGET) $(LIBS)
 

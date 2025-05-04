@@ -2,9 +2,23 @@
 #include <sstream>
 #include <ctime>
 #include <sqlite3.h>
+#include <sstream>
+#include <iomanip>
+#include <openssl/sha.h>
 
 #include "sqlite3_provider.h"
 #include "../utils/logger.h"
+
+std::string hashPassword(const std::string& password) {
+    unsigned char hash[SHA256_DIGEST_LENGTH];
+    SHA256(reinterpret_cast<const unsigned char*>(password.c_str()), password.size(), hash);
+
+    std::ostringstream oss;
+    for (int i = 0; i < SHA256_DIGEST_LENGTH; ++i) {
+        oss << std::hex << std::setw(2) << std::setfill('0') << static_cast<int>(hash[i]);
+    }
+    return oss.str();
+}
 
 SQLite3Provider::SQLite3Provider(const char *dbFile, const std::string& logFilename) : dbFile(dbFile), logger(logFilename) {
     int exit = sqlite3_open(dbFile, &db);
@@ -77,32 +91,33 @@ void SQLite3Provider::queryTable(const std::string& tableName) {
     }
 }
 
+
 bool SQLite3Provider::isUserExists(const std::string& username, const std::string& password) {
-    std::string sql = "SELECT EXISTS(SELECT 1 FROM users WHERE username = '" + username + "' AND password = '" + password + "');";
+    std::string hashedPassword = hashPassword(password);
+    std::cout << hashedPassword << std::endl;
+    std::string sql = "SELECT EXISTS(SELECT 1 FROM users WHERE username = '" + username + "' AND password = '" + hashedPassword + "');";
+
     char* errMsg = nullptr;
     bool exists = false;
 
     auto callback = [](void* data, int argc, char** argv, char** colNames) -> int {
-        if (argc > 0 && argv[0]) { // Ensure argv[0] is not NULL
+        if (argc > 0 && argv[0]) {
             bool* exists = static_cast<bool*>(data);
-            *exists = std::stoi(argv[0]) != 0; // Convert the result to a boolean
+            *exists = std::stoi(argv[0]) != 0;
         }
         return 0;
     };
 
-    int exit = sqlite3_exec(db, sql.c_str(), callback, &exists, &errMsg);
+    int exit = sqlite3_exec(getDB(), sql.c_str(), callback, &exists, &errMsg);
     if (exit != SQLITE_OK) {
-        logger.log(ERROR, "Error checking if user exists: " + std::string(errMsg));
+        std::cerr << "Error verifying user: " << errMsg << std::endl;
         sqlite3_free(errMsg);
     } else {
-        logger.log(INFO, "Checked if user exists successfully.");
+        std::cout << "User verification query executed successfully." << std::endl;
     }
-
-    std::cout << sql << " -> Result: " << (exists ? 1 : 0) << std::endl; // Debug output
 
     return exists;
 }
-
 
 bool SQLite3Provider::getTokenTTL(const std::string& token, std::time_t& ttl) {
     std::string sql = "SELECT ttl FROM tokens WHERE token = '" + token + "';";
@@ -128,6 +143,10 @@ bool SQLite3Provider::getTokenTTL(const std::string& token, std::time_t& ttl) {
     }
 
     return tokenExists;
+}
+
+sqlite3* SQLite3Provider::getDB() {
+    return db;
 }
 
 

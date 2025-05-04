@@ -11,6 +11,7 @@ public:
     SQLite3Provider(const char *dbFile, const std::string& logFilename);
     ~SQLite3Provider();
 
+    sqlite3* getDB(); // Expose the database connection
     bool getUsernameFromToken(const std::string& token, std::string& username);
     bool getTokenTTL(const std::string& token, std::time_t& ttl);
     void insert(const std::string& sql);

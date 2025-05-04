@@ -24,9 +24,9 @@ std::string trim(const std::string& str) {
 }
 
 bool TokenManager::VerifyToken(const std::string& token, const std::string& signature) {
-    size_t lastPeriod = token.rfind('.'); // Find the last period in the token
+    size_t lastPeriod = token.rfind('.');
     if (lastPeriod == std::string::npos) {
-        return false; // Invalid token format
+        return false;
     }
 
     std::string tokenPart = trim(token.substr(lastPeriod + 1));

@@ -16,7 +16,7 @@ void handleClient(CTCPSSLServer& server, ASecureSocket::SSLSocket clientSocket) 
             std::string receivedMessage(buffer, bytesReceived);
             std::cout << "Received: " << receivedMessage << std::endl;
 
-            std::string response = "Server received: " + receivedMessage;
+            std::string response = "Hello from Server!" + receivedMessage;
             if (!server.Send(clientSocket, response)) {
                 std::cerr << "Failed to send response to client." << std::endl;
                 break;
@@ -39,9 +39,9 @@ int main() {
     std::string port = "8080";
     CTCPSSLServer server(logger, port);
 
-    server.SetSSLCertFile("/home/shyskov/Documents/libs/sem6/kursach/cert/certs/server.crt");
-    server.SetSSLKeyFile("/home/shyskov/Documents/libs/sem6/kursach/cert/certs/server.key");
-    server.SetSSLCerthAuth("/home/shyskov/Documents/libs/sem6/kursach/cert/certs/root.crt");
+    // server.SetSSLCertFile("/home/shyskov/Documents/libs/sem6/kursach/cert/certs/server.crt");
+    // server.SetSSLKeyFile("/home/shyskov/Documents/libs/sem6/kursach/cert/certs/server.key");
+    // server.SetSSLCerthAuth("/home/shyskov/Documents/libs/sem6/kursach/cert/certs/root.crt");
 
     std::vector<std::thread> clientThreads;
 
